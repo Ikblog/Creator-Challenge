@@ -172,9 +172,9 @@ button:active { transform: translateY(0); }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin: 18px 0 28px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0 30px;
 }
 
 .stat-card, .challenge-card, .habit-card, .analytics-card, .calendar, .daily-layout > *, .heatmap, .chart-card, .content-editor, .content-queue {
@@ -184,9 +184,37 @@ button:active { transform: translateY(0); }
   box-shadow: 0 12px 30px rgba(40, 40, 35, 0.07);
 }
 
-.stat-card { padding: 18px; }
-.stat-card strong { display: block; font-size: 2rem; }
-.stat-card span { color: var(--muted); font-weight: 700; }
+.stat-card {
+  min-height: 118px;
+  padding: 18px;
+  display: grid;
+  align-content: space-between;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--gold));
+}
+
+.stat-card strong {
+  display: block;
+  font-size: clamp(1.9rem, 4vw, 2.45rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
 
 .section-heading {
   display: flex;
@@ -668,7 +696,23 @@ select { appearance: auto; }
     max-width: calc(100vw - 62px);
     white-space: normal;
   }
-  .stats-grid, .analytics-grid, .challenge-grid { grid-template-columns: 1fr; }
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .stat-card {
+    min-height: 104px;
+    padding: 14px;
+    gap: 12px;
+  }
+  .stat-card strong {
+    font-size: 2rem;
+  }
+  .stat-card span {
+    font-size: 0.74rem;
+    overflow-wrap: anywhere;
+  }
+  .analytics-grid, .challenge-grid { grid-template-columns: 1fr; }
   .daily-layout { gap: 12px; }
   .day-card, .tracker-card, .notes-card {
     padding: 14px;
