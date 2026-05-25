@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreakFlow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button ghost hidden" id="backBtn" aria-label="Back to dashboard">←</button>
+      <div class="brand">
+        <span class="brand-mark">✓</span>
+        <div>
+          <h1>StreakFlow</h1>
+          <p id="quoteText">Small promises, kept daily.</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-button" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="homeView" class="view active">
+        <div class="home-hero">
+          <div>
+            <p class="eyebrow">Today’s practice</p>
+            <h2>Build the quiet proof that you keep showing up.</h2>
+          </div>
+          <button class="primary-button" id="newChallengeBtn">Start Challenge</button>
+        </div>
+
+        <div class="stats-grid" id="homeStats"></div>
+
+        <section class="ad-slot home-native-ad" aria-label="Sponsored">
+          <div class="ad-label">Sponsored</div>
+          <div class="ad-frame">
+            <div id="container-b2de646a9c5e744002e39f02c521c6ff"></div>
+          </div>
+        </section>
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Folders</p>
+            <h3>Your challenges</h3>
+          </div>
+        </div>
+        <div class="challenge-grid" id="challengeGrid"></div>
+
+        <section class="ad-slot home-banner-ad" aria-label="Sponsored">
+          <div class="ad-label">Sponsored</div>
+          <div class="ad-frame" id="homeBannerAdSlot"></div>
+        </section>
+      </section>
+
+      <section id="workspaceView" class="view">
+        <div class="workspace-head">
+          <div>
+            <p class="eyebrow" id="workspaceMeta">Challenge</p>
+            <h2 id="workspaceTitle"></h2>
+            <p id="workspaceGoal" class="muted"></p>
+          </div>
+          <div class="workspace-progress">
+            <span id="workspacePct">0%</span>
+            <small>overall</small>
+          </div>
+        </div>
+
+        <nav class="tabs" aria-label="Challenge sections">
+          <button class="tab active" data-tab="daily">Daily</button>
+          <button class="tab" data-tab="habits">Habits</button>
+          <button class="tab" data-tab="analytics">Analytics</button>
+          <button class="tab" data-tab="calendar">Calendar</button>
+        </nav>
+
+        <div id="dailyTab" class="tab-panel active"></div>
+        <div id="habitsTab" class="tab-panel"></div>
+        <div id="analyticsTab" class="tab-panel"></div>
+        <div id="calendarTab" class="tab-panel"></div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" id="bottomNav" aria-label="Quick navigation">
+    <button class="nav-item active" data-bottom-home>
+      <span>⌂</span>
+      <small>Home</small>
+    </button>
+    <button class="nav-item" data-bottom-tab="daily">
+      <span>✓</span>
+      <small>Daily</small>
+    </button>
+    <button class="nav-add" id="navAddBtn" aria-label="Add">
+      <span>+</span>
+      <small id="navAddLabel">Add</small>
+    </button>
+    <a class="nav-item" href="createnote.html">
+      <span>✎</span>
+      <small>Note</small>
+    </a>
+    <button class="nav-item" data-bottom-tab="habits">
+      <span>▦</span>
+      <small>Habits</small>
+    </button>
+  </nav>
+
+  <div class="modal-backdrop" id="challengeModal" aria-hidden="true">
+    <form class="modal" id="challengeForm">
+      <div class="modal-head">
+        <h3 id="challengeModalTitle">Create challenge</h3>
+        <button type="button" class="icon-button ghost" data-close="challengeModal" aria-label="Close">×</button>
+      </div>
+      <label>Challenge name<input name="name" required maxlength="48" placeholder="30 Days Discipline"></label>
+      <div class="form-row">
+        <label>Duration<input name="duration" type="number" min="7" max="365" required value="30"></label>
+        <label>Start date<input name="startDate" type="date" required></label>
+      </div>
+      <label>Accent color<input name="accent" type="color" value="#7D9A6D"></label>
+      <label>Motivation goal<textarea name="goal" rows="3" placeholder="Why does this season matter?"></textarea></label>
+      <div class="modal-actions">
+        <button type="button" class="secondary-button" data-close="challengeModal">Cancel</button>
+        <button class="primary-button" type="submit">Save Challenge</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-backdrop" id="habitModal" aria-hidden="true">
+    <form class="modal" id="habitForm">
+      <div class="modal-head">
+        <h3>Add habit</h3>
+        <button type="button" class="icon-button ghost" data-close="habitModal" aria-label="Close">×</button>
+      </div>
+      <div class="icon-picker" id="iconPicker"></div>
+      <label>Habit name<input name="name" required maxlength="42" placeholder="Read 10 pages"></label>
+      <div class="form-row">
+        <label>Target time<input name="time" type="time"></label>
+        <label>Icon<input name="icon" id="habitIconInput" readonly value="📚"></label>
+      </div>
+      <label>Description<textarea name="description" rows="3" placeholder="Optional note or success criteria"></textarea></label>
+      <div class="modal-actions">
+        <button type="button" class="secondary-button" data-close="habitModal">Cancel</button>
+        <button class="primary-button" type="submit">Add Habit</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="celebration" id="celebration" aria-hidden="true">
+    <div class="celebration-card">
+      <button class="icon-button ghost" id="closeCelebration" aria-label="Close">×</button>
+      <span class="spark">✦</span>
+      <h3>Day complete</h3>
+      <p>You kept today’s promise. That counts.</p>
+    </div>
+  </div>
+
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
